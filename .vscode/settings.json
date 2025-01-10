@@ -1,0 +1,12 @@
+{
+  // Enable format on save globally
+  "editor.formatOnSave": true,
+
+  // Set Prettier as the default formatter for all supported languages
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // Use non-relative paths for TypeScript imports
+  // Ensure `baseUrl` or `paths` is configured in `tsconfig.json` for compatibility with this setting.
+  "typescript.preferences.importModuleSpecifier": "non-relative"
+}

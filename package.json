@@ -1,0 +1,37 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write . --ignore-unknown",
+    "lint:fix": "next lint --fix && prettier --write . --ignore-unknown",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "next": "15.1.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.4",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.4.2",
+    "sass": "^1.82.0",
+    "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint",
+    "*": "prettier --write --ignore-unknown"
+  }
+}
