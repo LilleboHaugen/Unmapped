@@ -2,7 +2,7 @@
   --bg-color: #f5f6fa; /* Light grayish-white background */
   --bg-secondary-color: #ffffff; /* Pure white for secondary elements */
   --text-color: #1c1c1e; /* Deep black text for readability */
-  --primary-color: #007aff; /* Slightly darker blue for primary actions */
+  --primary-color: #49979d; /* Slightly darker blue for primary actions */
   --border-color: #d6d7db; /* Subtle gray border */
   --cta-color: #ff3b30; /* Bright red for CTAs */
   --cta-text-color: #ffffff; /* White text on CTAs for contrast */
@@ -11,10 +11,10 @@
 }
 
 .App--dark {
-  --bg-color: #121416; /* Dark background */
-  --bg-secondary-color: #1e1f24; /* Slightly lighter secondary background */
-  --text-color: #e0e0e0; /* Light gray text for readability */
-  --primary-color: #4e9ffe; /* Vibrant blue for primary actions */
+  --bg-color: #161618; /* Dark background */
+  --bg-secondary-color: #1b1b1f; /* Slightly lighter secondary background */
+  --text-color: #e0efef; /* Light gray text for readability */
+  --primary-color: #49979d; /* Vibrant blue for primary actions */
   --border-color: #292b30; /* Subtle border color */
   --cta-color: #ff5c5c; /* Eye-catching red for call-to-action buttons */
   --cta-text-color: #ffffff; /* White text on CTAs for contrast */

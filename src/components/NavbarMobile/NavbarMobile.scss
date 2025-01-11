@@ -6,13 +6,15 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 16px;
+  z-index: 2;
 
   .icon {
-    width: 40px;
     height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
+    display: flex;
+    gap: 8px;
 
     &:hover {
       cursor: pointer;
