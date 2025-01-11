@@ -54,11 +54,14 @@ textarea {
   width: 100%;
   border: none;
   border-radius: 5px;
-  border-radius: 50px;
   background-color: var(--bg-secondary-color);
   padding: 8px 16px;
 
   &:focus {
     outline: 2px solid var(--border-color);
   }
+}
+
+hr {
+  border: 1px solid var(--border-color);
 }
