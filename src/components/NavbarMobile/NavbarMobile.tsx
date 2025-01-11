@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import "./NavbarMobile.scss"
-import { HomeIcon, SearchIcon } from "@/components/Icons"
+import { Favicon, SearchIcon } from "@/components/Icons"
 import { Hamburger } from "@/components/Hamburger/Hamburger"
 
 interface NavbarMobileProps {
@@ -11,11 +11,15 @@ interface NavbarMobileProps {
 export const NavbarMobile: React.FC<NavbarMobileProps> = () => {
   return (
     <div className="NavbarMobile">
-      <Link href={"/"}>
-        <HomeIcon />
+      <Link href={"/"} className="icon">
+        <Favicon />
       </Link>
-      <SearchIcon />
-      <Hamburger />
+      <div className="icon">
+        <SearchIcon />
+      </div>
+      <div className="icon">
+        <Hamburger />
+      </div>
     </div>
   )
 }
