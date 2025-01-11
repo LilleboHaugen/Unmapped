@@ -1,3 +1,5 @@
+![Unmapped Logo](./public/img/unmapped.png)
+
 # Unmapped
 
 **Unmapped** is a fully customizable homepage that transforms the way you start your journey on the web. Whether it’s searching the internet, pinning bookmarks, organizing files and photos, or adding tools like kanban boards and calendars, Unmapped is your gateway to exploration. Build your workspace, your way—your journey, your map.
