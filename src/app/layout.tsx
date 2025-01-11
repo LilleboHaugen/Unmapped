@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Outfit } from "next/font/google"
 import "../styles/index.scss"
+import { NavbarMobile } from "@/components"
 
 // If loading a variable font, you don't need to specify the font weight
 const outfit = Outfit({
@@ -9,9 +10,9 @@ const outfit = Outfit({
 })
 
 export const metadata: Metadata = {
-  title: "NextJS 15 Template App",
+  title: "Unmapped",
   description:
-    "Template App with NextJS 15, Sass, Prettier, Eslint, Husky, Lint-staged",
+    "Template App with NextJS 15, Sass, Prettier, Eslint, Husky, Lint-staged", // TODO: Fiks
 }
 
 export default function RootLayout({
@@ -21,7 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="App--dark">
-      <body className={outfit.className}>{children}</body>
+      <body className={outfit.className}>
+        <main>{children}</main>
+        <NavbarMobile />
+      </body>
     </html>
   )
 }

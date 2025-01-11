@@ -1,0 +1,18 @@
+@use "../../styles/colors.css" as *;
+
+.NavbarMobile {
+  background-color: var(--bg-secondary-color);
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+
+  a {
+    display: flex;
+  }
+
+  svg {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
