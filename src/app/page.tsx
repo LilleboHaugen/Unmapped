@@ -1,3 +1,9 @@
+import { GoogleSearchBar } from "@/components"
+
 export default function Home() {
-  return <div className="Home">Home</div>
+  return (
+    <div className="Home">
+      <GoogleSearchBar />
+    </div>
+  )
 }

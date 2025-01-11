@@ -16,6 +16,7 @@ h4,
 h5,
 h6 {
   font-size: revert;
+  font-weight: 400;
 }
 
 html,
@@ -42,4 +43,22 @@ img {
 
 a {
   text-decoration: none;
+}
+
+form {
+  max-width: 425px;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  border-radius: 50px;
+  background-color: var(--bg-secondary-color);
+  padding: 8px 16px;
+
+  &:focus {
+    outline: 2px solid var(--border-color);
+  }
 }

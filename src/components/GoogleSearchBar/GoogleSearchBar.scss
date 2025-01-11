@@ -1,0 +1,43 @@
+.GoogleSearchBar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+  margin: 0 auto;
+
+  .input {
+    position: relative;
+
+    input {
+      padding: 0 48px;
+      height: 48px;
+    }
+
+    svg {
+      position: absolute;
+      top: 8px;
+      width: 20px;
+    }
+
+    .empty {
+      width: 48px;
+      height: 48px;
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .lucide-search {
+      left: 16px;
+    }
+
+    .lucide-x {
+      right: 16px;
+      width: 24px;
+    }
+  }
+}
