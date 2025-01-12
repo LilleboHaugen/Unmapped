@@ -16,8 +16,6 @@ export const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = () => {
 
   const pathname = usePathname()
 
-  console.log(pathname)
-
   return (
     <div className={`NavbarMobileMenu ${navbarIsOpen ? "navbarIsOpen" : ""}`}>
       <div className="content">

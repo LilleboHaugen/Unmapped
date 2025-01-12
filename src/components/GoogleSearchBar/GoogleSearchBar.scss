@@ -1,3 +1,5 @@
+@use "../../styles/colors.css" as *;
+
 .GoogleSearchBar {
   display: flex;
   flex-direction: column;
@@ -45,6 +47,45 @@
     .lucide-x {
       right: 16px;
       width: 24px;
+    }
+  }
+
+  .autoComplete {
+    text-align: left;
+    background-color: var(--bg-secondary-color);
+    outline: 2px solid var(--border-color);
+    border-radius: 0 0 24px 24px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 48px;
+    width: 100%;
+
+    a {
+      padding: 8px 16px;
+      display: grid;
+      grid-template-columns: 24px auto;
+      gap: 8px;
+      align-items: center;
+
+      p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      svg {
+        position: static;
+        opacity: 0.5;
+      }
+
+      &:hover {
+        background-color: var(--bg-color);
+      }
+    }
+
+    a:last-of-type {
+      padding-bottom: 16px;
     }
   }
 }

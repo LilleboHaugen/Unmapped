@@ -1,8 +1,10 @@
 "use client"
 
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Cross, SearchIcon } from "@/components/Icons"
+import { googleAutoComplete } from "@/axios/apiCalls"
 import "./GoogleSearchBar.scss"
+import Link from "next/link"
 
 interface GoogleSearchBarProps {
   // Define your props here
@@ -10,6 +12,8 @@ interface GoogleSearchBarProps {
 
 export const GoogleSearchBar: React.FC<GoogleSearchBarProps> = () => {
   const [query, setQuery] = useState<string>("")
+  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [inputFocused, setInputFocused] = useState<boolean>(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -20,8 +24,17 @@ export const GoogleSearchBar: React.FC<GoogleSearchBarProps> = () => {
 
   const handleDelete = () => {
     setQuery("")
-    if (inputRef.current) inputRef.current.focus()
+    setSuggestions([])
   }
+
+  useEffect(() => {
+    const handleAutoComplete = async () => {
+      const result = await googleAutoComplete(query)
+      setSuggestions(result)
+    }
+
+    handleAutoComplete()
+  }, [query])
 
   return (
     <form
@@ -34,12 +47,29 @@ export const GoogleSearchBar: React.FC<GoogleSearchBarProps> = () => {
         <input
           type="text"
           value={query}
+          onFocus={() => setInputFocused(true)}
+          onBlur={() => setInputFocused(false)}
           onChange={(e) => setQuery(e.target.value)}
           ref={inputRef}
         />
         <SearchIcon />
         <Cross />
         <div className="empty" onClick={handleDelete}></div>
+        {inputFocused && suggestions.length > 0 && (
+          <div className="autoComplete" onMouseDown={(e) => e.preventDefault()}>
+            {suggestions.map((suggestion) => {
+              return (
+                <Link
+                  href={`https://www.google.com/search?q=${suggestion}`}
+                  key={suggestion}
+                >
+                  <SearchIcon />
+                  <p>{suggestion}</p>
+                </Link>
+              )
+            })}
+          </div>
+        )}
       </div>
     </form>
   )
