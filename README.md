@@ -1,4 +1,4 @@
-![Unmapped Logo](./public/img/unmapped.png)
+![Unmapped Logo](./public/img/unmapped.svg)
 
 # Unmapped
 
