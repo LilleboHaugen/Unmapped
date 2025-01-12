@@ -16,7 +16,7 @@
 
 **Planned**
 
-- **Backend**: Bun with ExpressJS
+- **Backend**: Bun with ExpressJS and TypeScript
 - **Database**: Supabase
 
 <br>
