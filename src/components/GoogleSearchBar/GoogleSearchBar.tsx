@@ -3,8 +3,8 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Cross, SearchIcon } from "@/components/Icons"
 import { googleAutoComplete } from "@/axios/apiCalls"
-import "./GoogleSearchBar.scss"
 import Link from "next/link"
+import "./GoogleSearchBar.scss"
 
 interface GoogleSearchBarProps {
   // Define your props here
@@ -13,9 +13,15 @@ interface GoogleSearchBarProps {
 export const GoogleSearchBar: React.FC<GoogleSearchBarProps> = () => {
   const [query, setQuery] = useState<string>("")
   const [suggestions, setSuggestions] = useState<string[]>([])
-  const [inputFocused, setInputFocused] = useState<boolean>(false)
+  const [suggestionsOpened, setSuggestionsOpened] = useState(false)
+  const [suggestionIndex, setSuggestionIndex] = useState(-1)
 
-  const inputRef = useRef<HTMLInputElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
+
+  const handleAutoComplete = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const result = await googleAutoComplete(e.target.value)
+    setSuggestions(result)
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -27,48 +33,99 @@ export const GoogleSearchBar: React.FC<GoogleSearchBarProps> = () => {
     setSuggestions([])
   }
 
+  const handleKeyboardNavigation = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (suggestions.length > 0) {
+      if (e.key === "ArrowDown" || e.key === "Tab") {
+        e.preventDefault()
+        setSuggestionIndex((prevIndex) => prevIndex + 1)
+
+        if (suggestionIndex === suggestions.length - 1) {
+          setSuggestionIndex(0)
+        }
+      }
+
+      if (e.key === "ArrowUp") {
+        setSuggestionIndex((prevIndex) => prevIndex - 1)
+
+        if (suggestionIndex <= 0) {
+          setSuggestionIndex(suggestions.length - 1)
+        }
+      }
+    }
+  }
+
   useEffect(() => {
-    const handleAutoComplete = async () => {
-      const result = await googleAutoComplete(query)
-      setSuggestions(result)
+    setSuggestionsOpened(true)
+  }, [query])
+
+  useEffect(() => {
+    console.log(suggestionIndex)
+    if (suggestionIndex > -1) setQuery(suggestions[suggestionIndex])
+  }, [suggestionIndex, suggestions])
+
+  useEffect(() => {
+    if (!suggestionsOpened) setSuggestionIndex(-1)
+  }, [suggestionsOpened])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setSuggestionsOpened(false)
+      }
     }
 
-    handleAutoComplete()
-  }, [query])
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   return (
     <form
       className="GoogleSearchBar"
       method="POST"
       onSubmit={(e) => handleSubmit(e)}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          setSuggestionsOpened(false)
+        }
+      }}
     >
       <h2>Search the web</h2>
-      <div className="input">
+      <div className="input" ref={ref}>
         <input
           type="text"
           value={query}
-          onFocus={() => setInputFocused(true)}
-          onBlur={() => setInputFocused(false)}
-          onChange={(e) => setQuery(e.target.value)}
-          ref={inputRef}
+          onFocus={() => setSuggestionsOpened(true)}
+          onChange={(e) => {
+            setQuery(e.target.value)
+            handleAutoComplete(e)
+            setSuggestionIndex(-1)
+          }}
+          onKeyDown={(e) => handleKeyboardNavigation(e)}
         />
         <SearchIcon />
         <Cross />
         <div className="empty" onClick={handleDelete}></div>
-        {inputFocused && suggestions.length > 0 && (
-          <div className="autoComplete" onMouseDown={(e) => e.preventDefault()}>
-            {suggestions.map((suggestion) => {
+        {suggestionsOpened && suggestions.length > 0 && (
+          <ul className="autoComplete">
+            {suggestions.map((suggestion, index) => {
               return (
                 <Link
                   href={`https://www.google.com/search?q=${suggestion}`}
                   key={suggestion}
+                  onFocus={(e) => setQuery(e.target.innerText)}
+                  tabIndex={-1}
+                  className={suggestionIndex === index ? "active" : ""}
                 >
                   <SearchIcon />
-                  <p>{suggestion}</p>
+                  <li>{suggestion}</li>
                 </Link>
               )
             })}
-          </div>
+          </ul>
         )}
       </div>
     </form>
