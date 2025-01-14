@@ -16,6 +16,12 @@ export const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = () => {
 
   const pathname = usePathname()
 
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") setNavbarIsOpen(false)
+  }
+
+  window.addEventListener("keydown", handleKeyDown)
+
   return (
     <div className={`NavbarMobileMenu ${navbarIsOpen ? "navbarIsOpen" : ""}`}>
       <div className="content">
