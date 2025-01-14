@@ -7,7 +7,7 @@ export async function GET(request: Request) {
     const query = url.searchParams.get("query")
 
     const result = await fetch(
-      `https://suggestqueries.google.com/complete/search?&output=chrome&q=${query?.substring(0, 100)}`,
+      `https://suggestqueries.google.com/complete/search?client=firefox&q=${query?.substring(0, 100)}`,
     )
 
     // Read the raw response as a buffer
