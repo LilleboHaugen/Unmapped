@@ -1,11 +1,11 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 import { useAtom } from "jotai"
 import { navbarIsOpenAtom } from "@/context/formStore"
-import "./NavbarMobileMenu.scss"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import "./NavbarMobileMenu.scss"
 
 interface NavbarMobileMenuProps {
   // Define your props here
@@ -16,11 +16,21 @@ export const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = () => {
 
   const pathname = usePathname()
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") setNavbarIsOpen(false)
-  }
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setNavbarIsOpen(false)
+    }
 
-  window.addEventListener("keydown", handleKeyDown)
+    if (typeof window !== "undefined") {
+      window.addEventListener("keydown", handleKeyDown)
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("keydown", handleKeyDown)
+      }
+    }
+  }, [setNavbarIsOpen])
 
   return (
     <div className={`NavbarMobileMenu ${navbarIsOpen ? "navbarIsOpen" : ""}`}>
