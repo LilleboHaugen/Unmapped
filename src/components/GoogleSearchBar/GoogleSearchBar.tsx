@@ -61,7 +61,6 @@ export const GoogleSearchBar: React.FC<GoogleSearchBarProps> = () => {
   }, [query])
 
   useEffect(() => {
-    console.log(suggestionIndex)
     if (suggestionIndex > -1) setQuery(suggestions[suggestionIndex])
   }, [suggestionIndex, suggestions])
 
