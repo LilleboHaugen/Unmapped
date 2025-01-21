@@ -1,0 +1,18 @@
+@use "../../styles/colors.css" as *;
+
+.AddBookmark {
+  background-color: var(--bg-secondary-color);
+  border-radius: 5px;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    stroke: var(--primary-color);
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}

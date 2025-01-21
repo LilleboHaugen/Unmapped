@@ -1,5 +1,12 @@
+import { Bookmarks } from "@/components"
 import "./HomePage.scss"
 
 export default function HomePage() {
-  return <div className="HomePage">HomePage</div>
+  return (
+    <main className="HomePage">
+      <section className="bookmarks">
+        <Bookmarks />
+      </section>
+    </main>
+  )
 }
