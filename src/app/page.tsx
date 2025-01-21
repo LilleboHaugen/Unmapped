@@ -1,5 +1,5 @@
 import "./HomePage.scss"
 
 export default function HomePage() {
-  return <div className="HomePage"></div>
+  return <div className="HomePage">HomePage</div>
 }

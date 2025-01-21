@@ -6,9 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "type-check": "tsc --noEmit",
     "format": "prettier --write . --ignore-unknown",
-    "lint:fix": "next lint --fix && prettier --write . --ignore-unknown",
+    "lint": "next lint . --no-cache",
+    "format:lint": "bun run type-check && bun run format && bun run lint",
     "prepare": "husky"
   },
   "dependencies": {
@@ -31,10 +32,11 @@
     "lint-staged": "^15.2.11",
     "prettier": "^3.4.2",
     "sass": "^1.82.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.21.0"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint",
-    "*": "prettier --write --ignore-unknown"
+    "*.{js,jsx,ts,tsx}": "bunx tsc-files --noEmit",
+    "*.{js,jsx,ts,tsx,js,json,md}": "bun run format && bun run lint"
   }
 }
