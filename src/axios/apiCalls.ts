@@ -1,9 +1,8 @@
 import axios from "axios"
 
-export const googleAutoComplete = async (query: string) => {
-  const result = await axios.get(`/api/getgoogleautocomplete`, {
-    params: { query },
-  })
+// Get website data for scraping
+export const getWebsiteData = async (url: string) => {
+  const { data } = await axios.get(url)
 
-  return result.data
+  return data
 }

@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="App--dark">
-      <body className={outfit.className}>
+      <body className={outfit.className} id="main-body">
         <NavbarMobile />
         <main>
           <NavbarMobileMenu />

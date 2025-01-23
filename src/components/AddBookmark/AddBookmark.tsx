@@ -1,33 +1,40 @@
 "use client"
 
+import React, { useState } from "react"
 import { fetchMetadata } from "@/app/actions"
-import { bookmarkType } from "@/types"
-import React from "react"
+import { Plus } from "lucide-react"
+import { useAtom } from "jotai"
+import { bookmarksAtom } from "@/context/formStore"
 import "./AddBookmark.scss"
-import { Plus } from "@/components/Icons"
 
 interface AddBookmarkProps {
   // Define your props here
 }
 
 export const AddBookmark: React.FC<AddBookmarkProps> = () => {
-  const bookmarks: bookmarkType[] = JSON.parse(
-    localStorage.getItem("bookmarks") || "[]",
-  )
+  const [bookmarks, setBookmarks] = useAtom(bookmarksAtom)
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  const handleAddBookmark = async () => {
+    const url = "https://www.nrk.no/"
+
+    const bookmark = await fetchMetadata(url)
+
+    if (bookmark) {
+      const containURL = bookmarks.filter((bookmark) => bookmark.url === url)
+
+      if (containURL.length === 0) {
+        setBookmarks([...bookmarks, bookmark])
+      }
+    }
+  }
+
+  console.log(handleAddBookmark)
 
   return (
-    <div
-      className="AddBookmark"
-      onClick={async () => {
-        const bookmark: bookmarkType = await fetchMetadata(
-          "https://www.nrk.no/",
-        )
-
-        bookmarks.push(bookmark)
-        localStorage.setItem("bookmarks", JSON.stringify(bookmarks))
-      }}
-    >
+    <div className="AddBookmark" onClick={() => setModalIsOpen(true)}>
       <Plus />
+      {modalIsOpen && <div className="modal">Modal</div>}
     </div>
   )
 }

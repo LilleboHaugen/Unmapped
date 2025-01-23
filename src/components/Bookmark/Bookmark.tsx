@@ -10,7 +10,7 @@ interface BookmarkProps {
 export const Bookmark: React.FC<BookmarkProps> = ({ bookmark }) => {
   return (
     <Link href={bookmark.url || ""} className="Bookmark">
-      {<img alt={bookmark.title} src={bookmark.icon} />}
+      <img alt={bookmark.title} src={bookmark.favicon} />
     </Link>
   )
 }
