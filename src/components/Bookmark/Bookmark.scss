@@ -7,8 +7,12 @@
   justify-content: center;
   align-items: center;
   background-color: var(--bg-secondary-color);
-  padding: 16px;
   aspect-ratio: 1/1;
+  width: 64px;
+
+  img {
+    width: 32px;
+  }
 
   &:hover {
     cursor: pointer;

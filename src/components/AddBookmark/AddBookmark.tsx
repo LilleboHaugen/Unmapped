@@ -6,6 +6,7 @@ import { Plus } from "lucide-react"
 import { useAtom } from "jotai"
 import { bookmarksAtom } from "@/context/formStore"
 import "./AddBookmark.scss"
+import ReactDOM from "react-dom"
 
 interface AddBookmarkProps {
   // Define your props here
@@ -14,9 +15,11 @@ interface AddBookmarkProps {
 export const AddBookmark: React.FC<AddBookmarkProps> = () => {
   const [bookmarks, setBookmarks] = useAtom(bookmarksAtom)
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [url, setUrl] = useState("")
 
-  const handleAddBookmark = async () => {
-    const url = "https://www.nrk.no/"
+  const handleAddBookmark = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setModalIsOpen(false)
 
     const bookmark = await fetchMetadata(url)
 
@@ -25,16 +28,38 @@ export const AddBookmark: React.FC<AddBookmarkProps> = () => {
 
       if (containURL.length === 0) {
         setBookmarks([...bookmarks, bookmark])
+        setUrl("")
       }
     }
   }
 
-  console.log(handleAddBookmark)
-
   return (
-    <div className="AddBookmark" onClick={() => setModalIsOpen(true)}>
-      <Plus />
-      {modalIsOpen && <div className="modal">Modal</div>}
-    </div>
+    <>
+      <div className="AddBookmark" onClick={() => setModalIsOpen(true)}>
+        <Plus />
+      </div>
+      {modalIsOpen &&
+        ReactDOM.createPortal(
+          <div className="modal">
+            <div className="content">
+              <form method="POST" onSubmit={(e) => handleAddBookmark(e)}>
+                <input
+                  type="text"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  autoFocus
+                />
+              </form>
+            </div>
+            <div
+              className="overlay"
+              onClick={() => {
+                setModalIsOpen(false)
+              }}
+            ></div>
+          </div>,
+          document.body,
+        )}
+    </>
   )
 }

@@ -4,7 +4,7 @@ import "./HomePage.scss"
 export default function HomePage() {
   return (
     <main className="HomePage">
-      <section className="bookmarks">
+      <section className="bookmarksContainer">
         <Bookmarks />
       </section>
     </main>
