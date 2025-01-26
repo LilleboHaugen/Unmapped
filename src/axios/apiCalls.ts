@@ -1,8 +1,9 @@
 import axios from "axios"
 
-// Get website data for scraping
-export const getWebsiteData = async (url: string) => {
-  const { data } = await axios.get(url)
+export const fetchMetadata = async (url: string) => {
+  const { data } = await axios.post("http://localhost:3000/bookmark", {
+    requestURL: url,
+  })
 
   return data
 }

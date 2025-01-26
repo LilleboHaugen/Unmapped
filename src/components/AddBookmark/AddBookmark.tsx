@@ -1,12 +1,13 @@
 "use client"
 
 import React, { useState } from "react"
-import { fetchMetadata } from "@/app/actions"
 import { Plus } from "lucide-react"
 import { useAtom } from "jotai"
 import { bookmarksAtom } from "@/context/formStore"
 import "./AddBookmark.scss"
 import ReactDOM from "react-dom"
+import { fetchMetadata } from "@/axios/apiCalls"
+import { bookmarkType } from "@/types"
 
 interface AddBookmarkProps {
   // Define your props here
@@ -23,13 +24,27 @@ export const AddBookmark: React.FC<AddBookmarkProps> = () => {
 
     const bookmark = await fetchMetadata(url)
 
-    if (bookmark) {
-      const containURL = bookmarks.filter((bookmark) => bookmark.url === url)
+    if (!bookmark.success) {
+      alert(bookmark.message)
+      setUrl("")
+    } else {
+      const localStorageBookmarks = JSON.parse(
+        String(localStorage.getItem("bookmarks")),
+      )
 
-      if (containURL.length === 0) {
-        setBookmarks([...bookmarks, bookmark])
-        setUrl("")
+      const containsURL = localStorageBookmarks.filter(
+        (localStorageBookmark: bookmarkType) =>
+          localStorageBookmark.url ===
+          url.replace(/^(https?:\/\/)?(www\.)?/, "https://").replace(/\/$/, ""),
+      )
+
+      if (containsURL.length > 0) {
+        alert("Already added")
+      } else {
+        setBookmarks([...bookmarks, bookmark.data])
       }
+
+      setUrl("")
     }
   }
 

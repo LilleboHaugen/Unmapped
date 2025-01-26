@@ -10,7 +10,13 @@ interface BookmarkProps {
 export const Bookmark: React.FC<BookmarkProps> = ({ bookmark }) => {
   return (
     <Link href={bookmark.url || ""} className="Bookmark">
-      <img alt={bookmark.title} src={bookmark.favicon} />
+      {bookmark.favicon ? (
+        <img alt={bookmark.title} src={bookmark.favicon} />
+      ) : (
+        bookmark.url && (
+          <p>{bookmark.url.replace(/^(https?:\/\/)?(www\.)?/, "")[0]}</p>
+        )
+      )}
     </Link>
   )
 }

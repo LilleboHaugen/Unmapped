@@ -11,10 +11,17 @@
   width: 64px;
 
   img {
-    width: 32px;
+    object-fit: cover;
+    min-width: 100%;
+    min-height: 100%;
   }
 
   &:hover {
     cursor: pointer;
+  }
+
+  p {
+    font-size: 3rem;
+    text-transform: uppercase;
   }
 }
