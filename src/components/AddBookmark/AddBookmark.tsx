@@ -2,50 +2,63 @@
 
 import React, { useState } from "react"
 import { Plus } from "lucide-react"
+import ReactDOM from "react-dom"
+import { postBookmark } from "@/axios/apiCalls"
+import { useAuth } from "@clerk/nextjs"
 import { useAtom } from "jotai"
 import { bookmarksAtom } from "@/context/formStore"
 import "./AddBookmark.scss"
-import ReactDOM from "react-dom"
-import { fetchMetadata } from "@/axios/apiCalls"
-import { bookmarkType } from "@/types"
 
 interface AddBookmarkProps {
   // Define your props here
 }
 
 export const AddBookmark: React.FC<AddBookmarkProps> = () => {
-  const [bookmarks, setBookmarks] = useAtom(bookmarksAtom)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [url, setUrl] = useState("")
+  const [bookmarks, setBookmarks] = useAtom(bookmarksAtom)
+
+  const { getToken } = useAuth()
 
   const handleAddBookmark = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setModalIsOpen(false)
 
-    const bookmark = await fetchMetadata(url)
+    // Generate a unique temporary ID
+    const tempId = `temp-${Date.now()}`
+
+    // Add a temporary bookmark
+    setBookmarks([
+      ...bookmarks,
+      {
+        id: tempId,
+        title: "Loading Bookmark...",
+        description: "Bookmark is being added...",
+        favicon: undefined,
+        url: undefined,
+      },
+    ])
+
+    const token = await getToken()
+
+    let bookmark
+
+    if (token) {
+      bookmark = await postBookmark(url, token)
+    }
 
     if (!bookmark.success) {
       alert(bookmark.message)
-      setUrl("")
+      setBookmarks([...bookmarks.filter((bookmark) => bookmark.id !== tempId)])
     } else {
-      const localStorageBookmarks = JSON.parse(
-        String(localStorage.getItem("bookmarks")),
-      )
-
-      const containsURL = localStorageBookmarks.filter(
-        (localStorageBookmark: bookmarkType) =>
-          localStorageBookmark.url ===
-          url.replace(/^(https?:\/\/)?(www\.)?/, "https://").replace(/\/$/, ""),
-      )
-
-      if (containsURL.length > 0) {
-        alert("Already added")
-      } else {
-        setBookmarks([...bookmarks, bookmark.data])
-      }
-
-      setUrl("")
+      // Replace the temporary bookmark with the real one
+      setBookmarks([
+        ...bookmarks.filter((bookmark) => bookmark.id !== tempId), // Remove the temporary bookmark
+        bookmark.data[0], // Add the real bookmark
+      ])
     }
+
+    setUrl("")
   }
 
   return (

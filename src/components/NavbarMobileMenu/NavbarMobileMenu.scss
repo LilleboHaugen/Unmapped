@@ -13,6 +13,9 @@
     transform 0.25s ease,
     visibility 0.25s ease;
   transition-delay: 0.25s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .content {
     opacity: 0;

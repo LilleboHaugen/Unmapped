@@ -1,7 +1,9 @@
+"use client"
+
 import { bookmarkType } from "@/types"
 import React from "react"
-import "./Bookmark.scss"
 import Link from "next/link"
+import "./Bookmark.scss"
 
 interface BookmarkProps {
   bookmark: bookmarkType

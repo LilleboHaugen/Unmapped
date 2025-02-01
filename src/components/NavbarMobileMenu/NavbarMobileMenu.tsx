@@ -6,6 +6,7 @@ import { navbarIsOpenAtom } from "@/context/formStore"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import "./NavbarMobileMenu.scss"
+import { UserButton } from "@clerk/nextjs"
 
 interface NavbarMobileMenuProps {
   // Define your props here
@@ -59,6 +60,7 @@ export const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = () => {
           </Link>
         </nav>
       </div>
+      <UserButton />
     </div>
   )
 }
